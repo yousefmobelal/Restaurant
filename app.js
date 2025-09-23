@@ -3,6 +3,9 @@ import cors from "cors";
 import helmet from "helmet";
 import path from "path";
 import { fileURLToPath } from "url";
+import userRoutes from "./src/routes/user.routes.js";
+import AppError from "./src/utils/appError.js";
+import globalErrorHandler from "./src/middlewares/errorController.js";
 
 const app = express();
 
@@ -12,5 +15,13 @@ app.use(helmet());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "public")));
+
+app.use("/api/users", userRoutes);
+
+app.all("*all", (req, res, next) =>
+  next(new AppError(`Can't find ${req.originalUrl} on this server`, 404))
+);
+
+app.use(globalErrorHandler);
 
 export default app;
