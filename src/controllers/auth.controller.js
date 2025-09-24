@@ -1,6 +1,7 @@
 import User from "../models/User.js";
 import jwt from "jsonwebtoken";
 import AppError from "../utils/appError.js";
+import catchAsync from "../utils/catchAsync.js";
 
 const signToken = (id) =>
   jwt.sign({ id }, process.env.JWT_SECRET, {
@@ -14,22 +15,18 @@ const sendUserWithToken = (user, statusCode, req, res) => {
     .status(statusCode)
     .json({ status: "success", data: { ...user._doc, token } });
 };
-export const signup = async (req, res, next) => {
-  try {
-    const user = await User.create({
-      name: req.body.name,
-      phone: req.body.phone,
-      email: req.body.email,
-      password: req.body.password,
-      location: req.body.location,
-    });
-    sendUserWithToken(user, 201, req, res);
-  } catch (err) {
-    next(err);
-  }
-};
+export const signup = catchAsync(async (req, res, next) => {
+  const user = await User.create({
+    name: req.body.name,
+    phone: req.body.phone,
+    email: req.body.email,
+    password: req.body.password,
+    location: req.body.location,
+  });
+  sendUserWithToken(user, 201, req, res);
+});
 
-export const login = async (req, res, next) => {
+export const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
   console.log(`These are email and password: ${email}, ${password}`);
   if (!email || !password) {
@@ -44,4 +41,28 @@ export const login = async (req, res, next) => {
   }
 
   sendUserWithToken(user, 200, req, res);
-};
+});
+
+export const protect = catchAsync(async (req, res, next) => {
+  const { authorization } = req.headers;
+  let token;
+  if (authorization && authorization.startsWith("Bearer")) {
+    token = authorization.split(" ")[1];
+  }
+
+  const notLoggedInError = new AppError(
+    "You are not logged in! please log in to get access",
+    401
+  );
+  if (!token) {
+    return next(notLoggedInError);
+  }
+  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  const user = await User.findById(decoded.id);
+  if (!user) {
+    return next(notLoggedInError);
+  }
+  req.user = user;
+  req.id = user._id;
+  next();
+});
