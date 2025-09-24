@@ -18,7 +18,7 @@ const __dirname = path.dirname(__filename);
 app.use(express.static(path.join(__dirname, "public")));
 
 app.use("/api/users", userRoutes);
-app.use("api/restaurants", restaurantRoutes);
+app.use("/api/restaurants", restaurantRoutes);
 
 app.all("*all", (req, res, next) =>
   next(new AppError(`Can't find ${req.originalUrl} on this server`, 404))

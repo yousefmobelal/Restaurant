@@ -1,4 +1,6 @@
 export const restrictToAdmin = (req, res, next) => {
+  console.log("restrictToAdmin");
+  console.log(req.use.isAdmin);
   if (!req.user.isAdmin) {
     return next(
       new AppError("You do not have permission to perform this action", 403)

@@ -14,7 +14,7 @@ const router = Router();
 router
   .route("/")
   .get(getAllRestaurants)
-  .post(restrictToAdmin, createRestaurant);
+  .post(protect, restrictToAdmin, createRestaurant);
 
 router
   .route("/:id")

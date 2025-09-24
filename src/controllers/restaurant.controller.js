@@ -21,11 +21,39 @@ export const createRestaurant = catchAsync(async (req, res, next) => {
     categories: req.body.categories,
     location: req.body.location,
   });
+  console.log("Hello");
+  await restaurant.save();
 
   res.status(201).json({ status: "success", data: restaurant });
 });
 export const addRestaurantToFavorites = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.id);
-  user.favourites.push();
+  user.favourites.push(req.params.id);
+  await user.save();
+  res
+    .status(200)
+    .json({ status: "success", message: "Successfully added to favorites" });
 });
-export const getRestaurantsWithin = catchAsync(async (req, res, next) => {});
+
+export const getRestaurantsWithin = catchAsync(async (req, res, next) => {
+  const { distance, latlng, unit } = req.params;
+  const radius = unit === "mi" ? distance / 3963.2 : distance / 6378.1;
+  const [lat, lng] = latlng.split(",").map((val) => parseFloat(val));
+  if (isNaN(lat) || isNaN(lng)) {
+    return next(
+      new AppError(
+        `Invalid latlng: ${latlng}. Please provide latitude and longitude in the format lat, lng.`,
+        400
+      )
+    );
+  }
+  const restaurants = await Restaurant.find({
+    location: { $geoWithin: { $centerSphere: [[lng, lat], radius] } },
+  });
+
+  res.status(200).json({
+    status: "success",
+    results: restaurants.length,
+    data: restaurants,
+  });
+});
