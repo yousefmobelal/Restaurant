@@ -39,6 +39,10 @@ const userSchema = new Schema({
   },
   cart: [{ type: mongoose.Schema.ObjectId, ref: "Food" }],
   favourites: [{ type: mongoose.Schema.ObjectId, ref: "Restaurant" }],
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 userSchema.pre("save", async function (next) {

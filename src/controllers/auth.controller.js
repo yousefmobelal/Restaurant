@@ -15,6 +15,7 @@ const sendUserWithToken = (user, statusCode, req, res) => {
     .status(statusCode)
     .json({ status: "success", data: { ...user._doc, token } });
 };
+
 export const signup = catchAsync(async (req, res, next) => {
   const user = await User.create({
     name: req.body.name,
@@ -34,7 +35,6 @@ export const login = catchAsync(async (req, res, next) => {
     );
   }
   const user = await User.findOne({ email }).select("+password");
-  console.log(`This is user:${user}`);
   if (!user || !(await user.correctPassword(password))) {
     return next(new AppError("Invalid email or password", 401));
   }
