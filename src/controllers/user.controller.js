@@ -4,11 +4,11 @@ import catchAsync from "../utils/catchAsync.js";
 
 export const updateUser = catchAsync(async (req, res, next) => {
   const id = req.id;
-  const updatedUser = await User.findOneAndUpdate(id, req.body, {
+  const updatedUser = await User.findOneAndUpdate({ _id: id }, req.body, {
     new: true,
     runValidators: true,
   });
-  json.status(200).json({ status: "success", data: updateUser });
+  res.status(200).json({ status: "success", data: updatedUser });
 });
 
 export const getMe = catchAsync(async (req, res, next) => {

@@ -28,7 +28,6 @@ export const signup = catchAsync(async (req, res, next) => {
 
 export const login = catchAsync(async (req, res, next) => {
   const { email, password } = req.body;
-  console.log(`These are email and password: ${email}, ${password}`);
   if (!email || !password) {
     return next(
       new AppError("You should provide bothe email and password", 400)
