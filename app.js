@@ -4,7 +4,7 @@ import helmet from "helmet";
 import userRoutes from "./src/routes/user.routes.js";
 import restaurantRoutes from "./src/routes/restaurant.routes.js";
 import AppError from "./src/utils/appError.js";
-import globalErrorHandler from "./src/middlewares/errorController.js";
+import globalErrorHandler from "./src/middlewares/globalErrorHandler.js";
 import { swaggerUi, swaggerSpec } from "./src/utils/swagger.js";
 
 const app = express();
