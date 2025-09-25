@@ -17,6 +17,7 @@ router
   .get(getAllRestaurants)
   .post(protect, restrictToAdmin, createRestaurant);
 
+//Todo: fisish implementing after creating food model
 router.post(
   "/:restaurantId/add-food/:foodId",
   protect,
