@@ -67,10 +67,9 @@ export default (err, req, res, next) => {
   if (process.env.NODE_ENV === "development") {
     sendErrorDev(err, res);
   } else if (process.env.NODE_ENV === "production") {
-    let error = { ...err };
+    let error = { ...err, message: err.message };
 
     if (err.name === "CastError") error = handleCastErrorDB(error);
-
     if (err.code === 11000) error = handleDuplicatedFieldDB(error);
     if (err.name === "ValidationError") error = handleValidationErrorDB(error);
     if (err.name === "JsonWebTokenError") error = handleJWTError();

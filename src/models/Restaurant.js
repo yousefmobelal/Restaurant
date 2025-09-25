@@ -34,13 +34,13 @@ const restaurantSchema = new Schema({
   foods: [{ type: mongoose.Schema.ObjectId, ref: "Food" }],
 });
 
-restaurantSchema.pre(/^find/, function (next) {
-  this.populate({
-    path: "foods",
-    select: "-__v -restaurant",
-  });
-  next();
-});
+// restaurantSchema.pre(/^find/, function (next) {
+//   this.populate({
+//     path: "foods",
+//     select: "-__v -restaurant",
+//   });
+//   next();
+// });
 
 //The location field stores [longitude, latitude] points and queries should use spherical geometry.
 restaurantSchema.index({ location: "2dsphere" });

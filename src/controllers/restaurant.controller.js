@@ -21,7 +21,7 @@ export const createRestaurant = catchAsync(async (req, res, next) => {
     categories: req.body.categories,
     location: req.body.location,
   });
-  console.log("Hello");
+
   await restaurant.save();
 
   res.status(201).json({ status: "success", data: restaurant });
@@ -36,9 +36,11 @@ export const addRestaurantToFavorites = catchAsync(async (req, res, next) => {
 });
 
 export const getRestaurantsWithin = catchAsync(async (req, res, next) => {
-  const { distance, latlng, unit } = req.params;
+  const { distance, unit } = req.query;
   const radius = unit === "mi" ? distance / 3963.2 : distance / 6378.1;
-  const [lat, lng] = latlng.split(",").map((val) => parseFloat(val));
+  const { coordinates } = req.user.location;
+
+  const [lat, lng] = coordinates;
   if (isNaN(lat) || isNaN(lng)) {
     return next(
       new AppError(
@@ -55,5 +57,20 @@ export const getRestaurantsWithin = catchAsync(async (req, res, next) => {
     status: "success",
     results: restaurants.length,
     data: restaurants,
+  });
+});
+
+export const addFoodToRestaurant = catchAsync(async (req, res, next) => {
+  const { restaurantId, foodId } = req.params;
+  const restaurant = await Restaurant.findById(restaurantId);
+  if (!restaurant) {
+    return next(new AppError("No restaurant found with this ID", 404));
+  }
+  // const food = await Food;
+  restaurant.foods.push(foodId);
+  await restaurant.save();
+  res.status(200).json({
+    status: "success",
+    message: "Food added to restaurant successfully",
   });
 });
