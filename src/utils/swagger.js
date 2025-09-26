@@ -24,6 +24,7 @@ const options = {
           ? "Local server"
           : "Production server",
       },
+      { url: "/api", description: "Relative server (works on Vercel)" },
     ],
     components: {
       securitySchemes: {
