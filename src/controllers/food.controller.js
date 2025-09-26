@@ -1,22 +1,17 @@
 import catchAsync from "../utils/catchAsync.js";
 import Restaurant from "../models/Restaurant.js";
-import User from "../models/User.js";
+import AppError from "../utils/appError.js";
 import Food from "../models/Food.js";
 
 // Get all foods
 export const getAllFoods = catchAsync(async (req, res, next) => {
-  const foods = await Food.find().populate("restaurant", "name description");
-  res
-    .status(200)
-    .json({ status: "success", results: foods.length, data: foods });
+  const foods = await Food.find();
+  res.status(200).json({ status: "success", data: foods });
 });
 
 // Get a single food by ID
 export const getFood = catchAsync(async (req, res, next) => {
-  const food = await Food.findById(req.params.id).populate(
-    "restaurant",
-    "name"
-  );
+  const food = await Food.findById(req.params.id);
   if (!food) return next(new AppError("No food found with this ID", 404));
 
   res.status(200).json({ status: "success", data: food });

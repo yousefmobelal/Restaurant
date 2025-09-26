@@ -6,9 +6,19 @@ const foodSchema = new Schema({
     required: [true, "Food must have a name"],
     trim: true,
   },
+  description: {
+    type: String,
+    required: [true, "Food must have a description"],
+  },
   image: {
     type: String,
-    required: [true, "Food must have an image"],
+    validate: {
+      validator: function (v) {
+        return /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/.test(v);
+      },
+      message: (props) => `${props.value} is not a valid image URL!`,
+    },
+    required: [true, "Food must have an image URL"],
   },
   price: {
     type: Number,
@@ -19,5 +29,13 @@ const foodSchema = new Schema({
     ref: "Restaurant",
     required: [true, "Food must belong to a restaurant"],
   },
+});
+
+foodSchema.pre(/^find/, function (next) {
+  this.populate({
+    path: "restaurant",
+    select: "-__v -foods",
+  });
+  next();
 });
 export default mongoose.model("Food", foodSchema);
