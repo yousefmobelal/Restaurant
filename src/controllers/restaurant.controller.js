@@ -60,7 +60,7 @@ export const updateRestaurant = catchAsync(async (req, res, next) => {
     return next(new AppError("No restaurant found with this ID", 404));
   }
 
-  res.status(201).json({ status: "success", data: restaurant });
+  res.status(200).json({ status: "success", data: restaurant });
 });
 
 export const addRestaurantToFavorites = catchAsync(async (req, res, next) => {
