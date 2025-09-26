@@ -30,10 +30,7 @@ app.use(
 
 app.get("/swagger.json", (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  // res.send(swaggerSpec);
-  res.json({
-    message: path.join(process.cwd(), "/hello"),
-  });
+  res.send(swaggerSpec);
 });
 
 app.use("/api/users", userRoutes);
