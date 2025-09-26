@@ -6,16 +6,24 @@ import {
   addRestaurantToFavorites,
   getRestaurantsWithin,
   addFoodToRestaurant,
+  updateRestaurant,
 } from "../controllers/restaurant.controller.js";
 import { restrictToAdmin, restrictToUser } from "../middlewares/restrictTo.js";
 import { protect } from "../controllers/auth.controller.js";
+import ajvMiddleware from "../middlewares/ajv.middleware.js";
+import restaurantSchema from "../utils/restaurant.validator.js";
 
 const router = Router();
 
 router
   .route("/")
   .get(getAllRestaurants)
-  .post(protect, restrictToAdmin, createRestaurant);
+  .post(
+    protect,
+    restrictToAdmin,
+    ajvMiddleware(restaurantSchema),
+    createRestaurant
+  );
 
 //Todo: fisish implementing after creating food model
 router.post(
@@ -29,6 +37,9 @@ router.post("/:id/favorite", protect, restrictToUser, addRestaurantToFavorites);
 
 router.get("/nearby", protect, getRestaurantsWithin);
 
-router.get("/:id", getRestaurant);
+router
+  .route("/:id")
+  .get(getRestaurant)
+  .patch(protect, restrictToAdmin, updateRestaurant);
 
 export default router;

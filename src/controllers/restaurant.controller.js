@@ -7,7 +7,7 @@ export const getAllRestaurants = catchAsync(async (req, res, next) => {
   res.status(200).json({ status: "success", data: restaurants });
 });
 export const getRestaurant = catchAsync(async (req, res, next) => {
-  const id = req.params;
+  const { id } = req.params;
   const restaurant = await Restaurant.findById(id);
   if (!restaurant) {
     return next(new AppError("No restaurant found with this ID", 404));
@@ -26,6 +26,25 @@ export const createRestaurant = catchAsync(async (req, res, next) => {
 
   res.status(201).json({ status: "success", data: restaurant });
 });
+
+export const updateRestaurant = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+  const restaurant = await Restaurant.findByIdAndUpdate(
+    id,
+    { $set: req.body },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  if (!restaurant) {
+    return next(new AppError("No restaurant found with this ID", 404));
+  }
+
+  res.status(201).json({ status: "success", data: restaurant });
+});
+
 export const addRestaurantToFavorites = catchAsync(async (req, res, next) => {
   const user = await User.findById(req.id);
   user.favourites.push(req.params.id);

@@ -1,5 +1,3 @@
-import { checkEmail, checkPhoneNumber } from "../utils/regexExpressions.js";
-
 const schema = {
   type: "object",
   properties: {
@@ -30,6 +28,7 @@ const schema = {
           maxItems: 2,
         },
         address: { type: "string" },
+        description: { type: "string" },
       },
     },
     foods: {

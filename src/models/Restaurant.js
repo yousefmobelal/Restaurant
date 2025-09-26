@@ -25,6 +25,7 @@ const restaurantSchema = new Schema({
       type: String,
       default: "Point",
       enum: ["Point"],
+      required: [true, "Restaurant must have a location"],
     },
     coordinates: [Number],
     address: String,
