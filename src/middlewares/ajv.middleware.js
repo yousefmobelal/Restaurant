@@ -1,7 +1,9 @@
 import Ajv from "ajv";
 import AppError from "../utils/appError.js";
+import addFormats from "ajv-formats";
 
 const ajv = new Ajv();
+addFormats(ajv);
 
 export default (schema) => {
   return (req, res, next) => {
