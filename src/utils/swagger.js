@@ -11,7 +11,9 @@ const options = {
       version: "1.0.0",
       description: "Docs for My API",
     },
-    servers: [{ url, description: "Local server" }],
+    servers: [
+      { url, description: url.includes("localhost") ? "Local server" : "" },
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
