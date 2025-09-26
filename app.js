@@ -7,12 +7,21 @@ import foodRoutes from "./src/routes/food.routes.js";
 import AppError from "./src/utils/appError.js";
 import globalErrorHandler from "./src/middlewares/globalErrorHandler.js";
 import { swaggerUi, swaggerSpec } from "./src/utils/swagger.js";
-import path from "path";
 
 const app = express();
 
 app.use(express.json());
 app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000/",
+      "https://restaurant-olc0rma2f-yokajos-projects.vercel.app/",
+    ],
+    methods: ["GET", "POST", "PATCH", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 app.use(helmet());
 
 const CSS_URL =
