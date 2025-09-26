@@ -5,7 +5,6 @@ import {
   createRestaurant,
   addRestaurantToFavorites,
   getRestaurantsWithin,
-  addFoodToRestaurant,
   updateRestaurant,
   deleteRestaurant,
 } from "../controllers/restaurant.controller.js";
@@ -25,14 +24,6 @@ router
     ajvMiddleware(restaurantSchema),
     createRestaurant
   );
-
-//Todo: fisish implementing after creating food model
-router.post(
-  "/:restaurantId/add-food/:foodId",
-  protect,
-  restrictToAdmin,
-  addFoodToRestaurant
-);
 
 router.post("/:id/favorite", protect, restrictToUser, addRestaurantToFavorites);
 

@@ -96,18 +96,3 @@ export const getRestaurantsWithin = catchAsync(async (req, res, next) => {
     data: restaurants,
   });
 });
-
-export const addFoodToRestaurant = catchAsync(async (req, res, next) => {
-  const { restaurantId, foodId } = req.params;
-  const restaurant = await Restaurant.findById(restaurantId);
-  if (!restaurant) {
-    return next(new AppError("No restaurant found with this ID", 404));
-  }
-  // const food = await Food;
-  restaurant.foods.push(foodId);
-  await restaurant.save();
-  res.status(200).json({
-    status: "success",
-    message: "Food added to restaurant successfully",
-  });
-});
