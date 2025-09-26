@@ -4,6 +4,7 @@ import path from "path";
 
 const url =
   process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}/api/`;
+
 const options = {
   definition: {
     openapi: "3.0.0",
@@ -13,7 +14,12 @@ const options = {
       description: "Docs for My API",
     },
     servers: [
-      { url, description: url.includes("localhost") ? "Local server" : "" },
+      {
+        url,
+        description: url.includes("localhost")
+          ? "Local server"
+          : "Production server",
+      },
     ],
     components: {
       securitySchemes: {
@@ -26,13 +32,12 @@ const options = {
     },
   },
   apis: [
-    "src/routes/*.js",
-    "src/controllers/*.js",
-    path.join(process.cwd(), "docs/*.js"),
+    path.resolve("src/routes/*.js"),
+    path.resolve("src/controllers/*.js"),
+    path.resolve("docs/*.js"),
   ],
 };
 
 const swaggerSpec = swaggerJsdoc(options);
-console.log("Swagger paths:", JSON.stringify(swaggerSpec.paths, null, 2));
 
 export { swaggerUi, swaggerSpec };
