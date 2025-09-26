@@ -1,6 +1,10 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
+import "../../docs/components.js";
+import "../../docs/food.docs.js";
+import "../../docs/restaurant.docs.js";
+import "../../docs/user.docs.js";
 
 const url =
   process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}/api/`;

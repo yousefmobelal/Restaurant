@@ -131,3 +131,44 @@
  *             type: string
  *           description: List of Food IDs
  */
+
+//! Food
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Food:
+ *       type: object
+ *       required:
+ *         - name
+ *         - description
+ *         - image
+ *         - price
+ *         - restaurant
+ *       properties:
+ *         id:
+ *           type: string
+ *           description: MongoDB ObjectId of the food item
+ *           example: "652f12c8a23b9b1a12d45c87"
+ *         name:
+ *           type: string
+ *           description: Name of the food
+ *           example: "Cream Chicken"
+ *         description:
+ *           type: string
+ *           description: Short description of the food
+ *           example: "Delicious chicken in creamy sauce with vegetables."
+ *         image:
+ *           type: string
+ *           format: uri
+ *           description: URL of the food image
+ *           example: "https://example.com/images/cream-chicken.jpg"
+ *         price:
+ *           type: number
+ *           description: Price of the food in USD
+ *           example: 14.99
+ *         restaurant:
+ *           type: string
+ *           description: MongoDB ObjectId of the restaurant this food belongs to
+ *           example: "652f1280a23b9b1a12d45c81"
+ */
