@@ -12,16 +12,7 @@ const app = express();
 
 app.use(express.json());
 app.use(cors());
-app.use(
-  cors({
-    origin: [
-      "http://localhost:3000/",
-      "https://restaurant-olc0rma2f-yokajos-projects.vercel.app/",
-    ],
-    methods: ["GET", "POST", "PATCH", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+app.options("*", cors());
 app.use(helmet());
 
 const CSS_URL =
