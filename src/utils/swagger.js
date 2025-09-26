@@ -17,15 +17,7 @@ const options = {
       version: "1.0.0",
       description: "Docs for My API",
     },
-    servers: [
-      {
-        url,
-        description: url.includes("localhost")
-          ? "Local server"
-          : "Production server",
-      },
-      { url: "/api", description: "Relative server (works on Vercel)" },
-    ],
+    servers: [{ url: "/api", description: "Sever Url" }],
     components: {
       securitySchemes: {
         bearerAuth: {
