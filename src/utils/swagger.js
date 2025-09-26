@@ -26,7 +26,6 @@ const options = {
     },
   },
   apis: ["src/routes/*.js", "src/controllers/*.js", "docs/*.js"],
-  myKey: path.join(process.cwd(), "/hello"),
 };
 
 const swaggerSpec = swaggerJsdoc(options);

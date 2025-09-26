@@ -7,6 +7,7 @@ import foodRoutes from "./src/routes/food.routes.js";
 import AppError from "./src/utils/appError.js";
 import globalErrorHandler from "./src/middlewares/globalErrorHandler.js";
 import { swaggerUi, swaggerSpec } from "./src/utils/swagger.js";
+import path from "path";
 
 const app = express();
 
@@ -29,7 +30,10 @@ app.use(
 
 app.get("/swagger.json", (req, res) => {
   res.setHeader("Content-Type", "application/json");
-  res.send(swaggerSpec);
+  // res.send(swaggerSpec);
+  res.json({
+    message: path.join(process.cwd(), "/hello"),
+  });
 });
 
 app.use("/api/users", userRoutes);
