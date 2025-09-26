@@ -63,7 +63,5 @@ export const deleteFood = catchAsync(async (req, res, next) => {
     $pull: { foods: food._id },
   });
 
-  res
-    .status(200)
-    .json({ status: "success", message: "Food deleted successfully" });
+  res.status(204).json({ status: "success", data: null });
 });

@@ -32,9 +32,11 @@ const foodSchema = new Schema({
 });
 
 foodSchema.pre(/^find/, function (next) {
+  if (this.options._recursed) return next();
   this.populate({
     path: "restaurant",
     select: "-__v -foods",
+    options: { _recursed: true },
   });
   next();
 });
