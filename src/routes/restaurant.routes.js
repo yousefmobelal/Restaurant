@@ -7,6 +7,7 @@ import {
   getRestaurantsWithin,
   addFoodToRestaurant,
   updateRestaurant,
+  deleteRestaurant,
 } from "../controllers/restaurant.controller.js";
 import { restrictToAdmin, restrictToUser } from "../middlewares/restrictTo.js";
 import { protect } from "../controllers/auth.controller.js";
@@ -40,6 +41,7 @@ router.get("/nearby", protect, getRestaurantsWithin);
 router
   .route("/:id")
   .get(getRestaurant)
-  .patch(protect, restrictToAdmin, updateRestaurant);
+  .patch(protect, restrictToAdmin, updateRestaurant)
+  .delete(protect, restrictToAdmin, deleteRestaurant);
 
 export default router;

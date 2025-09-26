@@ -1,11 +1,28 @@
 import catchAsync from "../utils/catchAsync.js";
 import Restaurant from "../models/Restaurant.js";
 import User from "../models/User.js";
+import AppError from "../utils/appError.js";
 
 export const getAllRestaurants = catchAsync(async (req, res, next) => {
   const restaurants = await Restaurant.find();
   res.status(200).json({ status: "success", data: restaurants });
 });
+
+export const deleteRestaurant = catchAsync(async (req, res, next) => {
+  const { id } = req.params;
+
+  const restaurant = await Restaurant.findByIdAndDelete(id);
+
+  if (!restaurant) {
+    return next(new AppError("No restaurant found with this ID", 404));
+  }
+
+  res.status(204).json({
+    status: "success",
+    data: null,
+  });
+});
+
 export const getRestaurant = catchAsync(async (req, res, next) => {
   const { id } = req.params;
   const restaurant = await Restaurant.findById(id);
@@ -14,6 +31,7 @@ export const getRestaurant = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({ status: "success", data: restaurant });
 });
+
 export const createRestaurant = catchAsync(async (req, res, next) => {
   const restaurant = new Restaurant({
     name: req.body.name,
