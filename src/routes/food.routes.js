@@ -5,8 +5,9 @@ import {
   createFood,
   updateFood,
   deleteFood,
+  addFoodToCart,
 } from "../controllers/food.controller.js";
-import { restrictToAdmin } from "../middlewares/restrictTo.js";
+import { restrictToAdmin, restrictToUser } from "../middlewares/restrictTo.js";
 import { protect } from "../controllers/auth.controller.js";
 import ajvMiddleware from "../middlewares/ajv.middleware.js";
 import foodSchema from "../utils/food.validator.js";
@@ -21,6 +22,7 @@ router
 router
   .route("/:id")
   .get(getFood)
+  .post(protect, restrictToUser, addFoodToCart)
   .patch(protect, restrictToAdmin, updateFood)
   .delete(protect, restrictToAdmin, deleteFood);
 

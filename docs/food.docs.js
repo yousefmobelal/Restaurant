@@ -98,6 +98,26 @@
  *       404:
  *         description: Food not found
  *
+ *   post:
+ *     summary: Add food to user's cart
+ *     tags: [Foods]
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         schema:
+ *           type: string
+ *         required: true
+ *         description: Food ID
+ *     responses:
+ *       200:
+ *         description: Food added to cart successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/Food'
+ *       404:
+ *         description: Food not found
+ *
  *   patch:
  *     summary: Update food by ID
  *     tags: [Foods]

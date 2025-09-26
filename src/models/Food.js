@@ -1,4 +1,6 @@
 import mongoose, { mongo } from "mongoose";
+import { checkImageUrl } from "../utils/regexExpressions.js";
+
 const { Schema } = mongoose;
 const foodSchema = new Schema({
   name: {
@@ -14,7 +16,7 @@ const foodSchema = new Schema({
     type: String,
     validate: {
       validator: function (v) {
-        return /^https?:\/\/.+\.(jpg|jpeg|png|gif|webp)$/.test(v);
+        return checkImageUrl.test(v);
       },
       message: (props) => `${props.value} is not a valid image URL!`,
     },

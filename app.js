@@ -12,7 +12,7 @@ const app = express();
 
 app.use(express.json());
 const corsOptions = {
-  origin: "*", // or restrict to your frontend/Swagger UI domain
+  origin: "*",
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   allowedHeaders: ["Content-Type", "Authorization"],
 };
