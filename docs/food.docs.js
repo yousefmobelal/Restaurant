@@ -100,6 +100,8 @@
  *
  *   post:
  *     summary: Add food to user's cart
+ *     security:
+ *       - bearerAuth: []
  *     tags: [Foods]
  *     parameters:
  *       - in: path
