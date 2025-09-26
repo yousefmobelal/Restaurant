@@ -1,7 +1,8 @@
 import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 
-const url = `http://localhost:${process.env.PORT || 3000}/api/`;
+const url =
+  process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}/api/`;
 const options = {
   definition: {
     openapi: "3.0.0",
