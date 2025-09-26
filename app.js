@@ -11,8 +11,13 @@ import { swaggerUi, swaggerSpec } from "./src/utils/swagger.js";
 const app = express();
 
 app.use(express.json());
-app.use(cors());
-app.options("*all", cors());
+const corsOptions = {
+  origin: "*", // or restrict to your frontend/Swagger UI domain
+  methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+  allowedHeaders: ["Content-Type", "Authorization"],
+};
+
+app.use(cors(corsOptions));
 app.use(helmet());
 
 const CSS_URL =
