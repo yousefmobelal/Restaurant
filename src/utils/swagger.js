@@ -33,4 +33,6 @@ const options = {
 };
 
 const swaggerSpec = swaggerJsdoc(options);
+console.log("Swagger paths:", JSON.stringify(swaggerSpec.paths, null, 2));
+
 export { swaggerUi, swaggerSpec };
