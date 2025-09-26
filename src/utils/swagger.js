@@ -2,6 +2,8 @@ import swaggerJsdoc from "swagger-jsdoc";
 import swaggerUi from "swagger-ui-express";
 import path from "path";
 
+console.log(path.join(process.cwd(), "src/routes/*.js"));
+
 const url =
   process.env.BASE_URL || `http://localhost:${process.env.PORT || 3000}/api/`;
 const options = {
